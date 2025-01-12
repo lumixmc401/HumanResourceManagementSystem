@@ -1,0 +1,2 @@
+﻿遷移指令
+Add-Migration AddUserRelatedTables -project HumanResourceManagementSystem.Data -StartupProject HumanResourceManagementSystem.API
