@@ -12,8 +12,8 @@ namespace HumanResourceManagementSystem.Service.Dtos.User
     public class UpdateUserDto
     {
         public Guid Id { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
+        public string Email { get; set; } = "";
+        public string Name { get; set; } = "";
         public IEnumerable<RoleDto> Roles { get; set; } = [];
         public IEnumerable<ClaimDto> Claims { get; set; } = [];
     }

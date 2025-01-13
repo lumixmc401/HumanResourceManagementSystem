@@ -4,12 +4,8 @@ using HumanResourceManagementSystem.Service.Dtos.User;
 using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Interfaces;
 using Konscious.Security.Cryptography;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace HumanResourceManagementSystem.Service.Implementations
 {

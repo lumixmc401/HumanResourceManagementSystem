@@ -1,11 +1,21 @@
+using BuildingBlock.Exceptions.Handler;
+using BuildingBlock.Middlewares;
 using HumanResourceManagementSystem.Data.DbContexts;
 using HumanResourceManagementSystem.Data.UnitOfWorks;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.Implementations;
 using HumanResourceManagementSystem.Service.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Error()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -21,6 +31,8 @@ builder.Services.AddDbContext<HumanResourceDbContext>(options =>
 builder.Services.AddScoped<IHumanResourceUnitOfWork, HumanResourceUnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
 
 // 自動應用遷移
@@ -30,7 +42,8 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
-// Configure the HTTP request pipeline.
+app.UseExceptionHandler(options => { });
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -41,6 +54,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<LoggingMiddleware>();
 
 app.UseAuthorization();
 

@@ -22,5 +22,26 @@ namespace HumanResourceManagementSystem.API.Controllers
             await _userService.CreateUserAsync(dto);
             return Ok();
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(UpdateUserDto dto)
+        {
+            await _userService.UpdateUserAsync(dto);
+            return Ok();
+        }
+
+        [HttpPut("Password")]
+        public async Task<IActionResult> UpdateUserPassword(UpdateUserDto dto)
+        {
+            await _userService.UpdateUserAsync(dto);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(Guid id)
+        {
+            await _userService.DeleteUserAsync(id);
+            return Ok();
+        }
     }
 }

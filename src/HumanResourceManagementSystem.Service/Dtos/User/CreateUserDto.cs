@@ -12,7 +12,6 @@ namespace HumanResourceManagementSystem.Service.Dtos.User
     {
         public string Email { get; set; } = "";
         public string Password { get; set; } = "";
-        public string Name { get; set; } = "";
         public IEnumerable<RoleDto> Roles { get; set; } = [];
         public IEnumerable<ClaimDto> Claims { get; set; } = [];
     }
