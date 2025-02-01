@@ -13,6 +13,8 @@ namespace HumanResourceManagementSystem.Service.Interfaces
         Task CreateUserAsync(CreateUserDto user);
         Task<User> GetUserByIdAsync(Guid userId);
         Task UpdateUserAsync(UpdateUserDto user);
+        Task UpdatePasswordAsync(UpdateUserPasswordDto user);
+        Task<bool> VerifyUser(VerifyUserDto dto);
         Task DeleteUserAsync(Guid userId);
     }
 }

@@ -13,6 +13,14 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanResourceManagementSystem.Service", "HumanResourceManagementSystem.Service\HumanResourceManagementSystem.Service.csproj", "{8EC721E8-677C-4507-A725-E257E569256F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9F894CA3-CE22-4B97-AF8B-C67CED0C58E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceTest", "Tests\ServiceTest\ServiceTest.csproj", "{1BDFC047-5339-47BC-893D-CDB5A5E68749}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTest", "Tests\ApiTest\ApiTest.csproj", "{1EC031A7-CEBE-4E46-9DB4-042EA5D59B5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidatorTest", "Tests\ValidatorTest\ValidatorTest.csproj", "{4F718F3A-A585-453F-B61C-DB6A067F51DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,9 +47,26 @@ Global
 		{8EC721E8-677C-4507-A725-E257E569256F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EC721E8-677C-4507-A725-E257E569256F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EC721E8-677C-4507-A725-E257E569256F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDFC047-5339-47BC-893D-CDB5A5E68749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BDFC047-5339-47BC-893D-CDB5A5E68749}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BDFC047-5339-47BC-893D-CDB5A5E68749}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BDFC047-5339-47BC-893D-CDB5A5E68749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC031A7-CEBE-4E46-9DB4-042EA5D59B5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC031A7-CEBE-4E46-9DB4-042EA5D59B5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC031A7-CEBE-4E46-9DB4-042EA5D59B5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC031A7-CEBE-4E46-9DB4-042EA5D59B5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F718F3A-A585-453F-B61C-DB6A067F51DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F718F3A-A585-453F-B61C-DB6A067F51DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F718F3A-A585-453F-B61C-DB6A067F51DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F718F3A-A585-453F-B61C-DB6A067F51DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1BDFC047-5339-47BC-893D-CDB5A5E68749} = {9F894CA3-CE22-4B97-AF8B-C67CED0C58E4}
+		{1EC031A7-CEBE-4E46-9DB4-042EA5D59B5D} = {9F894CA3-CE22-4B97-AF8B-C67CED0C58E4}
+		{4F718F3A-A585-453F-B61C-DB6A067F51DF} = {9F894CA3-CE22-4B97-AF8B-C67CED0C58E4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77C06452-5A8D-4877-A75F-12FF9790CD36}

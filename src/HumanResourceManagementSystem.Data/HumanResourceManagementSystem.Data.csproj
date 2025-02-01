@@ -26,4 +26,8 @@
     <Folder Include="Repositories\HumanResources\Implementations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingBlock\BuildingBlock.csproj" />
+  </ItemGroup>
+
 </Project>

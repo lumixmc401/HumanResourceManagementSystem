@@ -1,5 +1,6 @@
-﻿using HumanResourceManagementSystem.Data.Models.HumanResource;
-using HumanResourceManagementSystem.Data.UnitOfWorks;
+﻿using BuildingBlock.Helpers;
+using HumanResourceManagementSystem.Data.Models.HumanResource;
+using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.Dtos.User;
 using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Interfaces;
@@ -9,20 +10,15 @@ using System.Text;
 
 namespace HumanResourceManagementSystem.Service.Implementations
 {
-    public class UserService : IUserService
+    public class UserService(IHumanResourceUnitOfWork db) : IUserService
     {
-        private readonly IHumanResourceUnitOfWork _db;
-
-        public UserService(IHumanResourceUnitOfWork db)
-        {
-            _db = db;
-        }
+        private readonly IHumanResourceUnitOfWork _db = db;
 
         public async Task CreateUserAsync(CreateUserDto userDto)
         {
-            byte[] salt = GenerateSalt();
+            byte[] salt = PasswordHelper.GenerateSalt();
 
-            string hashPassword = HashPassword(userDto.Password, salt);
+            string hashPassword = PasswordHelper.HashPassword(userDto.Password, salt);
 
             var user = new User
             {
@@ -35,7 +31,8 @@ namespace HumanResourceManagementSystem.Service.Implementations
                 }).ToList(),
                 UserClaims = userDto.Claims.Select(c => new UserClaim
                 {
-                    Claim = new Claim { Id = c.Id, Type = c.Type, Value = c.Value }
+                    ClaimType = c.Type,
+                    ClaimValue = c.Value,
                 }).ToList()
             };
 
@@ -53,7 +50,8 @@ namespace HumanResourceManagementSystem.Service.Implementations
             }).ToList();
             user.UserClaims = userDto.Claims.Select(c => new UserClaim
             {
-                Claim = new Claim { Id = c.Id, Type = c.Type, Value = c.Value }
+                ClaimType = c.Type,
+                ClaimValue = c.Value,
             }).ToList();
 
             await _db.Users.UpdateAsync(user);
@@ -67,11 +65,11 @@ namespace HumanResourceManagementSystem.Service.Implementations
             await _db.CompleteAsync();
         }
 
-        public async Task UpdatePasswordAsync(Guid userId, string newPassword)
+        public async Task UpdatePasswordAsync(UpdateUserPasswordDto dto)
         {
-            var user = await _db.Users.GetByIdAsync(userId) ?? throw new UserNotFoundException(userId);
-            byte[] salt = GenerateSalt();
-            string hashPassword = HashPassword(newPassword, salt);
+            var user = await _db.Users.GetByIdAsync(dto.Id) ?? throw new UserNotFoundException(dto.Id);
+            byte[] salt = PasswordHelper.GenerateSalt();
+            string hashPassword = PasswordHelper.HashPassword(dto.NewPassword, salt);
 
             user.PasswordHash = hashPassword;
             user.Salt = Convert.ToBase64String(salt);
@@ -85,28 +83,13 @@ namespace HumanResourceManagementSystem.Service.Implementations
             var user = await _db.Users.GetByIdAsync(userId);
             return user ?? throw new UserNotFoundException(userId);
         }
-
-        private string HashPassword(string password, byte[] salt)
+        
+        public async Task<bool> VerifyUser(VerifyUserDto dto)
         {
-            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password))
-            {
-                Salt = salt,
-                DegreeOfParallelism = 8, // 4 cores
-                MemorySize = 1024 * 1024, // 1 GB
-                Iterations = 4
-            };
+            var user = await _db.Users.GetUserByEmailAsync(dto.Email) 
+                ?? throw new UserNotFoundException("Email",dto.Email);
 
-            return Convert.ToBase64String(argon2.GetBytes(16));
-        }
-
-        private byte[] GenerateSalt()
-        {
-            var salt = new byte[16];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-            return salt;
+            return PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt));
         }
     }
 }

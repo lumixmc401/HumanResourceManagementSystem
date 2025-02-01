@@ -31,4 +31,8 @@
     <ProjectReference Include="..\HumanResourceManagementSystem.Service\HumanResourceManagementSystem.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ServiceCollection\" />
+  </ItemGroup>
+
 </Project>

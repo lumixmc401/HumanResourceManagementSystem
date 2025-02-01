@@ -5,16 +5,10 @@ using System.Diagnostics;
 
 namespace BuildingBlock.Middlewares
 {
-    public class LoggingMiddleware
+    public class LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger)
     {
-        private readonly RequestDelegate _next;
-        private readonly ILogger<LoggingMiddleware> _logger;
-
-        public LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger)
-        {
-            _next = next ?? throw new ArgumentNullException(nameof(next));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        }
+        private readonly RequestDelegate _next = next ?? throw new ArgumentNullException(nameof(next));
+        private readonly ILogger<LoggingMiddleware> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         public async Task InvokeAsync(HttpContext context)
         {
@@ -48,11 +42,9 @@ namespace BuildingBlock.Middlewares
                 else
                 {
                     request.EnableBuffering();
-                    using (var reader = new StreamReader(request.Body, leaveOpen: true))
-                    {
-                        requestData = await reader.ReadToEndAsync();
-                        request.Body.Position = 0;
-                    }
+                    using var reader = new StreamReader(request.Body, leaveOpen: true);
+                    requestData = await reader.ReadToEndAsync();
+                    request.Body.Position = 0;
                 }
 
                 _logger.LogInformation("Handling request {RequestPath} from user {User} with IP {IPAddress} and TraceID {TraceID}. Request data: {RequestData}",

@@ -1,2 +1,4 @@
 ﻿遷移指令
-Add-Migration AddUserRelatedTables -project HumanResourceManagementSystem.Data -StartupProject HumanResourceManagementSystem.API
+Add-Migration AlterUserClaimPK -project HumanResourceManagementSystem.Data -StartupProject HumanResourceManagementSystem.API
+
+Remove-Migration

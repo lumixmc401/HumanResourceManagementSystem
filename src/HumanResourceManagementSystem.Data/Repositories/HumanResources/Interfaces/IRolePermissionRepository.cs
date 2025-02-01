@@ -1,6 +1,6 @@
 using HumanResourceManagementSystem.Data.Models.HumanResource;
 
-namespace HumanResourceManagementSystem.Data.Repositories.Interfaces
+namespace HumanResourceManagementSystem.Data.Repositories.HumanResources.Interfaces
 {
     public interface IRolePermissionRepository : IRepository<RolePermission>
     {

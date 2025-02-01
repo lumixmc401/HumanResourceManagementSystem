@@ -1,4 +1,5 @@
-﻿using HumanResourceManagementSystem.Data.Models.HumanResource;
+﻿using BuildingBlock.Helpers;
+using HumanResourceManagementSystem.Data.Models.HumanResource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -16,7 +17,6 @@ namespace HumanResourceManagementSystem.Data.DbContexts
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<Claim> Claims { get; set; }
         public DbSet<UserClaim> UserClaims { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Role> Roles { get; set; }
@@ -55,15 +55,13 @@ namespace HumanResourceManagementSystem.Data.DbContexts
 
             modelBuilder.Entity<UserClaim>(entity =>
             {
-                entity.HasKey(uc => new { uc.UserId, uc.ClaimId });
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.ClaimType).IsRequired();
+                entity.Property(e => e.ClaimValue).IsRequired();
 
-                entity.HasOne(uc => uc.User)
-                    .WithMany(u => u.UserClaims)
-                    .HasForeignKey(uc => uc.UserId);
-
-                entity.HasOne(uc => uc.Claim)
-                    .WithMany(c => c.UserClaims)
-                    .HasForeignKey(uc => uc.ClaimId);
+                entity.HasOne(e => e.User)
+                      .WithMany(u => u.UserClaims)
+                      .HasForeignKey(e => e.UserId);
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -91,23 +89,6 @@ namespace HumanResourceManagementSystem.Data.DbContexts
                    .IsUnique();
             });
 
-            modelBuilder.Entity<Claim>(entity =>
-            {
-                entity.Property(e => e.Id)
-                    .HasDefaultValueSql("NEWSEQUENTIALID()")
-                    .ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Type)
-                    .IsRequired()
-                    .HasMaxLength(256)
-                    .IsUnicode(true);
-
-                entity.Property(e => e.Value)
-                    .IsRequired()
-                    .HasMaxLength(256)
-                    .IsUnicode(true);
-            });
-
             modelBuilder.Entity<Role>(entity =>
             {
                 entity.Property(e => e.Id)
@@ -131,6 +112,53 @@ namespace HumanResourceManagementSystem.Data.DbContexts
                     .HasMaxLength(256)
                     .IsUnicode(true);
             });
+
+            //SeedData(modelBuilder);
+        }
+        private static void SeedData(ModelBuilder modelBuilder)
+        {
+            var adminRoleId = new Guid("d2b7f5e1-5c3b-4d3a-8b1e-2f3b5e1c3b4d");
+            var adminUserId = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6");
+            var adminUserClaimId = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d8");
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role
+                {
+                    Id = adminRoleId,
+                    Name = "Admin"
+                }
+            );
+
+            string salt = "salt";
+            byte[] saltBytes = System.Text.Encoding.UTF8.GetBytes(salt);
+            string hashPassword = PasswordHelper.HashPassword("admin", saltBytes);
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = adminUserId,
+                    Email = "admin@example.com",
+                    PasswordHash = hashPassword,
+                    Salt = salt,
+                }
+            );
+
+            modelBuilder.Entity<UserRole>().HasData(
+                new UserRole
+                {
+                    UserId = adminUserId,
+                    RoleId = adminRoleId
+                }
+            );
+
+            modelBuilder.Entity<UserClaim>().HasData(
+                new UserClaim
+                {
+                    Id = adminUserClaimId,
+                    UserId = adminUserId,
+                    ClaimType = "Name",
+                    ClaimValue = "Admin User"
+                }
+            );
         }
     }
 }

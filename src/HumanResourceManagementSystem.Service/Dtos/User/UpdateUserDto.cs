@@ -1,5 +1,5 @@
-﻿using HumanResourceManagementSystem.Service.Dtos.Claim;
-using HumanResourceManagementSystem.Service.Dtos.Role;
+﻿using HumanResourceManagementSystem.Service.Dtos.Role;
+using HumanResourceManagementSystem.Service.Dtos.UserClaim;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,6 @@ namespace HumanResourceManagementSystem.Service.Dtos.User
         public string Email { get; set; } = "";
         public string Name { get; set; } = "";
         public IEnumerable<RoleDto> Roles { get; set; } = [];
-        public IEnumerable<ClaimDto> Claims { get; set; } = [];
+        public IEnumerable<UserClaimDto> Claims { get; set; } = [];
     }
 }

@@ -1,5 +1,5 @@
 using HumanResourceManagementSystem.Data.Models.HumanResource;
-using HumanResourceManagementSystem.Data.Repositories.Interfaces;
+using HumanResourceManagementSystem.Data.Repositories.HumanResources.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanResourceManagementSystem.Data.Repositories.Implementations

@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace HumanResourceManagementSystem.Data.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T>(DbContext context) : IRepository<T> where T : class
     {
-        protected readonly DbContext _context;
-
-        public Repository(DbContext context)
-        {
-            _context = context;
-        }
+        protected readonly DbContext _context = context;
 
         public async Task<T?> GetByIdAsync(Guid id)
         {
@@ -25,7 +20,10 @@ namespace HumanResourceManagementSystem.Data.Repositories
         {
             return await _context.Set<T>().ToListAsync();
         }
-
+        public async Task<T?> FindFirstAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
         public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().Where(predicate).ToListAsync();

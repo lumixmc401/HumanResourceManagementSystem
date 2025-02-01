@@ -1,13 +1,14 @@
 using HumanResourceManagementSystem.Data.Models.HumanResource;
-using HumanResourceManagementSystem.Data.Repositories.Interfaces;
+using HumanResourceManagementSystem.Data.Repositories.HumanResources.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace HumanResourceManagementSystem.Data.Repositories.Implementations
+namespace HumanResourceManagementSystem.Data.Repositories.HumanResources.Implementations
 {
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository(DbContext context) : Repository<User>(context), IUserRepository
     {
-        public UserRepository(DbContext context) : base(context)
+        public Task<User?> GetUserByEmailAsync(string email)
         {
+            return FindFirstAsync(u => u.Email == email);
         }
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumanResourceManagementSystem.Service.Dtos.Claim
+namespace HumanResourceManagementSystem.Service.Dtos.UserClaim
 {
-    public class UpdateClaimDto
+    public class UserClaimDto
     {
         public Guid Id { get; set; }
         public string Type { get; set; } = "";

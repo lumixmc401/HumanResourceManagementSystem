@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumanResourceManagementSystem.Service.Dtos.Claim
+namespace HumanResourceManagementSystem.Service.Dtos.UserClaim
 {
-    public class ClaimDto
+    public class CreateUserClaimDto
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public string Type { get; set; } = "";
         public string Value { get; set; } = "";
     }

@@ -31,9 +31,9 @@ namespace HumanResourceManagementSystem.API.Controllers
         }
 
         [HttpPut("Password")]
-        public async Task<IActionResult> UpdateUserPassword(UpdateUserDto dto)
+        public async Task<IActionResult> UpdateUserPassword(UpdateUserPasswordDto dto)
         {
-            await _userService.UpdateUserAsync(dto);
+            await _userService.UpdatePasswordAsync(dto);
             return Ok();
         }
 

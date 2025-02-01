@@ -7,13 +7,10 @@ using System.Text;
 
 namespace HumanResourceManagementSystem.API.Jwt
 {
-    public class JwtTokenGenerator
+    public class JwtTokenGenerator(IOptions<JwtSettings> jwtSettings)
     {
-        private readonly IOptions<JwtSettings> _jwtSettings;
-        public JwtTokenGenerator(IOptions<JwtSettings> jwtSettings)
-        {
-            _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
-        }
+        private readonly IOptions<JwtSettings> _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
+
         public string GenerateJwtToken(Guid userId, string userName, string[] roles)
         {
             if (string.IsNullOrEmpty(_jwtSettings.Value.SignKey))
@@ -24,9 +21,9 @@ namespace HumanResourceManagementSystem.API.Jwt
 
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(ClaimTypes.Name, userName),
-                new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(), ClaimValueTypes.Integer64)
+                new(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new(ClaimTypes.Name, userName),
+                new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(), ClaimValueTypes.Integer64)
             };
 
             var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role)).ToList();

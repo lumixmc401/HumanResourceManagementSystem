@@ -1,13 +1,10 @@
 using HumanResourceManagementSystem.Data.Models.HumanResource;
-using HumanResourceManagementSystem.Data.Repositories.Interfaces;
+using HumanResourceManagementSystem.Data.Repositories.HumanResources.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace HumanResourceManagementSystem.Data.Repositories.Implementations
+namespace HumanResourceManagementSystem.Data.Repositories.HumanResources.Implementations
 {
-    public class UserClaimRepository : Repository<UserClaim>, IUserClaimRepository
+    public class UserClaimRepository(DbContext context) : Repository<UserClaim>(context), IUserClaimRepository
     {
-        public UserClaimRepository(DbContext context) : base(context)
-        {
-        }
     }
 }

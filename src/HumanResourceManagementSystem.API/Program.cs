@@ -1,7 +1,6 @@
 using BuildingBlock.Exceptions.Handler;
 using BuildingBlock.Middlewares;
 using HumanResourceManagementSystem.Data.DbContexts;
-using HumanResourceManagementSystem.Data.UnitOfWorks;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.Implementations;
 using HumanResourceManagementSystem.Service.Interfaces;
