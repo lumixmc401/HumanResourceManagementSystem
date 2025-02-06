@@ -1,4 +1,4 @@
 ﻿遷移指令
-Add-Migration AlterUserClaimPK -project HumanResourceManagementSystem.Data -StartupProject HumanResourceManagementSystem.API
+Add-Migration RemoveUserClaimPK -project HumanResourceManagementSystem.Data -StartupProject HumanResourceManagementSystem.API
 
 Remove-Migration

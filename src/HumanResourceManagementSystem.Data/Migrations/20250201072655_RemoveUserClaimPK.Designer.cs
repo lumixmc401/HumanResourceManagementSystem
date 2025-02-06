@@ -4,6 +4,7 @@ using HumanResourceManagementSystem.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResourceManagementSystem.Data.Migrations
 {
     [DbContext(typeof(HumanResourceDbContext))]
-    partial class HumanResourceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250201072655_RemoveUserClaimPK")]
+    partial class RemoveUserClaimPK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,13 +59,6 @@ namespace HumanResourceManagementSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("d2b7f5e1-5c3b-4d3a-8b1e-2f3b5e1c3b4d"),
-                            Name = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("HumanResourceManagementSystem.Data.Models.HumanResource.RolePermission", b =>
@@ -111,23 +107,10 @@ namespace HumanResourceManagementSystem.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6"),
-                            Email = "admin@example.com",
-                            PasswordHash = "YmMgQNAeIO2STqlO/qZpHQ==",
-                            Salt = "salt"
-                        });
                 });
 
             modelBuilder.Entity("HumanResourceManagementSystem.Data.Models.HumanResource.UserClaim", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("ClaimType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -139,20 +122,7 @@ namespace HumanResourceManagementSystem.Data.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
                     b.ToTable("UserClaims");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d8"),
-                            ClaimType = "Name",
-                            ClaimValue = "Admin User",
-                            UserId = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6")
-                        });
                 });
 
             modelBuilder.Entity("HumanResourceManagementSystem.Data.Models.HumanResource.UserRole", b =>
@@ -168,13 +138,6 @@ namespace HumanResourceManagementSystem.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6"),
-                            RoleId = new Guid("d2b7f5e1-5c3b-4d3a-8b1e-2f3b5e1c3b4d")
-                        });
                 });
 
             modelBuilder.Entity("HumanResourceManagementSystem.Data.Models.HumanResource.RolePermission", b =>
@@ -194,17 +157,6 @@ namespace HumanResourceManagementSystem.Data.Migrations
                     b.Navigation("Permission");
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("HumanResourceManagementSystem.Data.Models.HumanResource.UserClaim", b =>
-                {
-                    b.HasOne("HumanResourceManagementSystem.Data.Models.HumanResource.User", "User")
-                        .WithMany("UserClaims")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HumanResourceManagementSystem.Data.Models.HumanResource.UserRole", b =>
@@ -240,8 +192,6 @@ namespace HumanResourceManagementSystem.Data.Migrations
 
             modelBuilder.Entity("HumanResourceManagementSystem.Data.Models.HumanResource.User", b =>
                 {
-                    b.Navigation("UserClaims");
-
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618

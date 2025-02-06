@@ -113,7 +113,7 @@ namespace HumanResourceManagementSystem.Data.DbContexts
                     .IsUnicode(true);
             });
 
-            //SeedData(modelBuilder);
+            SeedData(modelBuilder);
         }
         private static void SeedData(ModelBuilder modelBuilder)
         {

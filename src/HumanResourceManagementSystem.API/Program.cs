@@ -1,5 +1,8 @@
 using BuildingBlock.Exceptions.Handler;
 using BuildingBlock.Middlewares;
+using HumanResourceManagementSystem.API.Jwt;
+using HumanResourceManagementSystem.API.Models.Dto.Jwt;
+using HumanResourceManagementSystem.API.ServiceCollection;
 using HumanResourceManagementSystem.Data.DbContexts;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.Implementations;
@@ -25,6 +28,10 @@ builder.Services.AddSwaggerGen();
 // µù¥U DbContext
 builder.Services.AddDbContext<HumanResourceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddCustomJwtAuthentication(builder.Configuration);
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.AddScoped<JwtTokenGenerator>();
 
 // µù¥U UnitOfWork
 builder.Services.AddScoped<IHumanResourceUnitOfWork, HumanResourceUnitOfWork>();

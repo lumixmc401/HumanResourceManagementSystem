@@ -20,7 +20,9 @@ namespace BuildingBlock.Helpers
                 Iterations = 4
             };
 
-            return Convert.ToBase64String(argon2.GetBytes(16));
+            var bytes = argon2.GetBytes(16);
+
+            return Convert.ToBase64String(bytes);
         }
 
         public static byte[] GenerateSalt()

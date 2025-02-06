@@ -11,7 +11,7 @@ namespace HumanResourceManagementSystem.API.Jwt
     {
         private readonly IOptions<JwtSettings> _jwtSettings = jwtSettings ?? throw new ArgumentNullException(nameof(jwtSettings));
 
-        public string GenerateJwtToken(Guid userId, string userName, string[] roles)
+        public string GenerateJwtToken(Guid userId, string userName, IEnumerable<Guid> roles)
         {
             if (string.IsNullOrEmpty(_jwtSettings.Value.SignKey))
                 throw new InvalidOperationException("SignKey is not configured.");
@@ -26,7 +26,7 @@ namespace HumanResourceManagementSystem.API.Jwt
                 new(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(), ClaimValueTypes.Integer64)
             };
 
-            var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role)).ToList();
+            var roleClaims = roles.Select(role => new Claim(ClaimTypes.Role, role.ToString())).ToList();
             claims.AddRange(roleClaims);
 
             var token = new JwtSecurityToken(

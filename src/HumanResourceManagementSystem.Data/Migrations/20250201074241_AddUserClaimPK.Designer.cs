@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResourceManagementSystem.Data.Migrations
 {
     [DbContext(typeof(HumanResourceDbContext))]
-    [Migration("20250122085009_AlterUserClaimPK")]
-    partial class AlterUserClaimPK
+    [Migration("20250201074241_AddUserClaimPK")]
+    partial class AddUserClaimPK
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -5,6 +5,7 @@ using HumanResourceManagementSystem.Service.Dtos.User;
 using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Interfaces;
 using Konscious.Security.Cryptography;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -84,12 +85,18 @@ namespace HumanResourceManagementSystem.Service.Implementations
             return user ?? throw new UserNotFoundException(userId);
         }
         
-        public async Task<bool> VerifyUser(VerifyUserDto dto)
+        public async Task<VerifyUserResponseDto> VerifyUser(VerifyUserRequestDto dto)
         {
             var user = await _db.Users.GetUserByEmailAsync(dto.Email) 
                 ?? throw new UserNotFoundException("Email",dto.Email);
 
-            return PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt));
+            return new VerifyUserResponseDto
+            { 
+                IsVerified = PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt)),
+                UserId = user.Id,
+                UserName = user.UserClaims.FirstOrDefault(c => c.ClaimType == ClaimTypes.Name)?.ClaimValue ?? "",
+                RoleIds = [.. user.UserRoles.Select(r => r.RoleId)]
+            };
         }
     }
 }

@@ -12,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
     <PackageReference Include="HtmlSanitizer" Version="8.1.870" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
@@ -29,10 +30,6 @@
     <ProjectReference Include="..\BuildingBlock\BuildingBlock.csproj" />
     <ProjectReference Include="..\HumanResourceManagementSystem.Data\HumanResourceManagementSystem.Data.csproj" />
     <ProjectReference Include="..\HumanResourceManagementSystem.Service\HumanResourceManagementSystem.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ServiceCollection\" />
   </ItemGroup>
 
 </Project>
