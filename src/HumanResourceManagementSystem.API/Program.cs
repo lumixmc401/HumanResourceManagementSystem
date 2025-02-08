@@ -1,5 +1,7 @@
 using BuildingBlock.Common.Exceptions.Handler;
 using BuildingBlock.Middlewares;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 using HumanResourceManagementSystem.Api.Jwt;
 using HumanResourceManagementSystem.Api.Models.DTOs.Jwt;
 using HumanResourceManagementSystem.Api.ServiceCollection;
@@ -7,6 +9,7 @@ using HumanResourceManagementSystem.Data.DbContexts;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.Implementations;
 using HumanResourceManagementSystem.Service.Interfaces;
+using HumanResourceManagementSystem.Service.Validators.User;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -38,6 +41,9 @@ builder.Services.AddScoped<IHumanResourceUnitOfWork, HumanResourceUnitOfWork>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+builder.Services.AddApplicationValidators();
+
 
 var app = builder.Build();
 

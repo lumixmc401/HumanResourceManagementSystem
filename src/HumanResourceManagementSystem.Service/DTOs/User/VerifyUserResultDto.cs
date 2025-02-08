@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HumanResourceManagementSystem.Service.DTOs.User
 {
-    public class VerifyUserResponseDto
+    public class VerifyUserResultDto
     {
         public Guid UserId { get; set; }
         public string UserName { get; set; } = "";

@@ -12,7 +12,7 @@ namespace HumanResourceManagementSystem.Api.Controllers
         private readonly IUserService _service = service;
         private readonly JwtTokenGenerator _jwt = jwt;
         [HttpPost("Token")]
-        public async Task<IActionResult> GetToken(VerifyUserRequestDto dto)
+        public async Task<IActionResult> GetToken(VerifyUserDto dto)
         {
             var response = await _service.VerifyUserAsync(dto);
             if (response.IsVerified)

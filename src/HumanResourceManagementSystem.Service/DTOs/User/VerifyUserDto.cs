@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HumanResourceManagementSystem.Service.DTOs.User
 {
-    public class VerifyUserRequestDto
+    public class VerifyUserDto
     {
         public string Email { get; set; } = "";
         public string Password { get; set; } = "";

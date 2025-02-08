@@ -27,4 +27,8 @@
     <ProjectReference Include="..\HumanResourceManagementSystem.Data\HumanResourceManagementSystem.Data.csproj" />
     <ProjectReference Include="..\HumanResourceManagementSystem.Service\HumanResourceManagementSystem.Service.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
 </Project>

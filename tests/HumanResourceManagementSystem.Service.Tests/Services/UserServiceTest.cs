@@ -146,6 +146,7 @@ namespace ServiceTest
             // Assert
             act.Should().ThrowAsync<UserNotFoundException>();
         }
+        
         [Test]
         public async Task VerifyUser_WithValidCredentials_ShouldReturnVerifiedResponse()
         {
@@ -175,7 +176,7 @@ namespace ServiceTest
             _mockUnitOfWork.Setup(u => u.Users.GetUserByEmailAsync(email))
                 .ReturnsAsync(user);
 
-            var dto = new VerifyUserRequestDto
+            var dto = new VerifyUserDto
             {
                 Email = email,
                 Password = password
@@ -195,7 +196,7 @@ namespace ServiceTest
         public async Task VerifyUser_WithInvalidEmail_ShouldThrowUserNotFoundException()
         {
             // Arrange
-            var dto = new VerifyUserRequestDto
+            var dto = new VerifyUserDto
             {
                 Email = "nonexistent@example.com",
                 Password = "password"

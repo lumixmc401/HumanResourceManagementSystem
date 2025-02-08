@@ -7,6 +7,9 @@ namespace BuildingBlock.Common.Extensions.FluentValidation
     {
         private static readonly HtmlSanitizer _sanitizer = new();
 
+        static MustNotContainXssExtemsion()
+        {
+        }
         public static IRuleBuilderOptions<T, string> MustNotContainXss<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
             return ruleBuilder.Must(x => IsSafeHtml(x)).WithMessage("{PropertyName} 包含不安全的字元");

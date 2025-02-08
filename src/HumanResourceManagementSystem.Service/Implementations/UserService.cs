@@ -82,12 +82,12 @@ namespace HumanResourceManagementSystem.Service.Implementations
             return user ?? throw new UserNotFoundException(userId);
         }
         
-        public async Task<VerifyUserResponseDto> VerifyUserAsync(VerifyUserRequestDto dto)
+        public async Task<VerifyUserResultDto> VerifyUserAsync(VerifyUserDto dto)
         {
             var user = await _db.Users.GetUserByEmailAsync(dto.Email) 
                 ?? throw new UserNotFoundException("Email",dto.Email);
 
-            return new VerifyUserResponseDto
+            return new VerifyUserResultDto
             { 
                 IsVerified = PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt)),
                 UserId = user.Id,
