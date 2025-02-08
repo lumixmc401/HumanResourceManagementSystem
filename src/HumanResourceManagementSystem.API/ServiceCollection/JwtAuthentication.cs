@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace HumanResourceManagementSystem.API.ServiceCollection
+namespace HumanResourceManagementSystem.Api.ServiceCollection
 {
     public static class JwtAuthentication
     {
@@ -22,7 +22,6 @@ namespace HumanResourceManagementSystem.API.ServiceCollection
                             new SymmetricSecurityKey(
                                 Encoding.UTF8.GetBytes(configuration.GetValue<string>("JwtSettings:SignKey") ??throw new ArgumentNullException("Jwt SignKey Not Set"))),
                         ClockSkew = TimeSpan.Zero
-
                     };
                 });
             return services;

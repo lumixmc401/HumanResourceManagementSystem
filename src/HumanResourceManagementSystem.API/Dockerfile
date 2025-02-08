@@ -12,21 +12,24 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["HumanResourceManagementSystem.API/HumanResourceManagementSystem.API.csproj", "HumanResourceManagementSystem.API/"]
-COPY ["BuildingBlock/BuildingBlock.csproj", "BuildingBlock/"]
-COPY ["HumanResourceManagementSystem.Data/HumanResourceManagementSystem.Data.csproj", "HumanResourceManagementSystem.Data/"]
-RUN dotnet restore "./HumanResourceManagementSystem.API/HumanResourceManagementSystem.API.csproj"
+COPY ["Directory.Packages.props", "."]
+COPY ["Directory.Build.props", "."]
+COPY ["src/HumanResourceManagementSystem.API/HumanResourceManagementSystem.Api.csproj", "src/HumanResourceManagementSystem.API/"]
+COPY ["src/BuildingBlock/BuildingBlock.csproj", "src/BuildingBlock/"]
+COPY ["src/HumanResourceManagementSystem.Data/HumanResourceManagementSystem.Data.csproj", "src/HumanResourceManagementSystem.Data/"]
+COPY ["src/HumanResourceManagementSystem.Service/HumanResourceManagementSystem.Service.csproj", "src/HumanResourceManagementSystem.Service/"]
+RUN dotnet restore "./src/HumanResourceManagementSystem.API/HumanResourceManagementSystem.Api.csproj"
 COPY . .
-WORKDIR "/src/HumanResourceManagementSystem.API"
-RUN dotnet build "./HumanResourceManagementSystem.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/src/HumanResourceManagementSystem.API"
+RUN dotnet build "./HumanResourceManagementSystem.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # 此階段可用來發佈要複製到最終階段的服務專案
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./HumanResourceManagementSystem.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./HumanResourceManagementSystem.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # 此階段用於生產環境，或以一般模式從 VS 執行時 (未使用偵錯設定時的預設值)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HumanResourceManagementSystem.API.dll"]
+ENTRYPOINT ["dotnet", "HumanResourceManagementSystem.Api.dll"]

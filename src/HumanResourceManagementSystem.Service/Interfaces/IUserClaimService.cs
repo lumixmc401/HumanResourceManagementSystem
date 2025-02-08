@@ -1,4 +1,4 @@
-﻿using HumanResourceManagementSystem.Service.Dtos.UserClaim;
+﻿using HumanResourceManagementSystem.Service.DTOs.UserClaim;
 using System;
 using System.Collections.Generic;
 using System.Linq;

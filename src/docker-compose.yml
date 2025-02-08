@@ -1,6 +1,0 @@
-services:
-  humanresourcemanagementsystem.api:
-    image: ${DOCKER_REGISTRY-}humanresourcemanagementsystemapi
-    build:
-      context: .
-      dockerfile: HumanResourceManagementSystem.API/Dockerfile

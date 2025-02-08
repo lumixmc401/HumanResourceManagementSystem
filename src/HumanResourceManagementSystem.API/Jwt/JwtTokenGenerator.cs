@@ -1,11 +1,11 @@
-﻿using HumanResourceManagementSystem.API.Models.Dto.Jwt;
+﻿using HumanResourceManagementSystem.Api.Models.DTOs.Jwt;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace HumanResourceManagementSystem.API.Jwt
+namespace HumanResourceManagementSystem.Api.Jwt
 {
     public class JwtTokenGenerator(IOptions<JwtSettings> jwtSettings)
     {

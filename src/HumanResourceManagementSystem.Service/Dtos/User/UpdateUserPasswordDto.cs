@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumanResourceManagementSystem.Service.Dtos.User
+namespace HumanResourceManagementSystem.Service.DTOs.User
 {
     public class UpdateUserPasswordDto
     {

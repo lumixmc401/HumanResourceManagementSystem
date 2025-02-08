@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumanResourceManagementSystem.Service.Dtos.UserClaim
+namespace HumanResourceManagementSystem.Service.DTOs.UserClaim
 {
     public class CreateUserClaimDto
     {

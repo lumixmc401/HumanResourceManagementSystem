@@ -1,4 +1,4 @@
-﻿using BuildingBlock.Helpers;
+﻿using BuildingBlock.Share.Helpers;
 using HumanResourceManagementSystem.Data.Models.HumanResource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;

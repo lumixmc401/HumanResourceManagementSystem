@@ -1,13 +1,10 @@
-﻿using BuildingBlock.Helpers;
+﻿using BuildingBlock.Share.Helpers;
 using HumanResourceManagementSystem.Data.Models.HumanResource;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
-using HumanResourceManagementSystem.Service.Dtos.User;
+using HumanResourceManagementSystem.Service.DTOs.User;
 using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Interfaces;
-using Konscious.Security.Cryptography;
 using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace HumanResourceManagementSystem.Service.Implementations
 {
@@ -85,7 +82,7 @@ namespace HumanResourceManagementSystem.Service.Implementations
             return user ?? throw new UserNotFoundException(userId);
         }
         
-        public async Task<VerifyUserResponseDto> VerifyUser(VerifyUserRequestDto dto)
+        public async Task<VerifyUserResponseDto> VerifyUserAsync(VerifyUserRequestDto dto)
         {
             var user = await _db.Users.GetUserByEmailAsync(dto.Email) 
                 ?? throw new UserNotFoundException("Email",dto.Email);

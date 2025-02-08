@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <!-- 設定解決方案根目錄 -->
+    <SolutionDir>$(MSBuildThisFileDirectory)</SolutionDir>
+
+    <!-- 設定 src 目錄位置 -->
+    <SourceRoot>$(SolutionDir)src\</SourceRoot>
+
+    <!-- 設定 tests 目錄位置 -->
+    <TestsRoot>$(SolutionDir)tests\</TestsRoot>
+
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+</Project>

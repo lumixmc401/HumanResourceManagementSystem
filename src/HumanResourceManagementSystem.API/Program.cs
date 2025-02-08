@@ -1,8 +1,8 @@
-using BuildingBlock.Exceptions.Handler;
+using BuildingBlock.Common.Exceptions.Handler;
 using BuildingBlock.Middlewares;
-using HumanResourceManagementSystem.API.Jwt;
-using HumanResourceManagementSystem.API.Models.Dto.Jwt;
-using HumanResourceManagementSystem.API.ServiceCollection;
+using HumanResourceManagementSystem.Api.Jwt;
+using HumanResourceManagementSystem.Api.Models.DTOs.Jwt;
+using HumanResourceManagementSystem.Api.ServiceCollection;
 using HumanResourceManagementSystem.Data.DbContexts;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.Implementations;

@@ -1,6 +1,6 @@
 ﻿using HumanResourceManagementSystem.Data.Models.HumanResource;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
-using HumanResourceManagementSystem.Service.Dtos.UserClaim;
+using HumanResourceManagementSystem.Service.DTOs.UserClaim;
 using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Interfaces;
 using System;

@@ -1,8 +1,8 @@
 using FluentValidation;
-using HumanResourceManagementSystem.Service.Dtos.User;
-using HumanResourceManagementSystem.API.Validators.Extensions;
+using HumanResourceManagementSystem.Service.DTOs.User;
+using BuildingBlock.Common.Extensions.FluentValidation;
 
-namespace HumanResourceManagementSystem.API.Validators.User
+namespace HumanResourceManagementSystem.Api.Validators.User
 {
     public class CreateUserDtoValidator : AbstractValidator<CreateUserDto>
     {

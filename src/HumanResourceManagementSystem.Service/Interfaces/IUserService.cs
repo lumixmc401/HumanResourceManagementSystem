@@ -1,5 +1,5 @@
 ﻿using HumanResourceManagementSystem.Data.Models.HumanResource;
-using HumanResourceManagementSystem.Service.Dtos.User;
+using HumanResourceManagementSystem.Service.DTOs.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace HumanResourceManagementSystem.Service.Interfaces
         Task<User> GetUserByIdAsync(Guid userId);
         Task UpdateUserAsync(UpdateUserDto user);
         Task UpdatePasswordAsync(UpdateUserPasswordDto user);
-        Task<VerifyUserResponseDto> VerifyUser(VerifyUserRequestDto dto);
+        Task<VerifyUserResponseDto> VerifyUserAsync(VerifyUserRequestDto dto);
         Task DeleteUserAsync(Guid userId);
     }
 }

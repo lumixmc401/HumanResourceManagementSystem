@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumanResourceManagementSystem.Service.Dtos.Role
+namespace HumanResourceManagementSystem.Service.DTOs.Role
 {
     public class RoleDto
     {

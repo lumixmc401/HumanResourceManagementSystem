@@ -1,9 +1,9 @@
-﻿using HumanResourceManagementSystem.API.Jwt;
-using HumanResourceManagementSystem.Service.Dtos.User;
+﻿using HumanResourceManagementSystem.Api.Jwt;
+using HumanResourceManagementSystem.Service.DTOs.User;
 using HumanResourceManagementSystem.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HumanResourceManagementSystem.API.Controllers
+namespace HumanResourceManagementSystem.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,7 +14,7 @@ namespace HumanResourceManagementSystem.API.Controllers
         [HttpPost("Token")]
         public async Task<IActionResult> GetToken(VerifyUserRequestDto dto)
         {
-            var response = await _service.VerifyUser(dto);
+            var response = await _service.VerifyUserAsync(dto);
             if (response.IsVerified)
             {
                 return Ok(_jwt.GenerateJwtToken(response.UserId,response.UserName,response.RoleIds));

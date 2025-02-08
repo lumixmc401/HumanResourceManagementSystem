@@ -1,5 +1,5 @@
-﻿using HumanResourceManagementSystem.Service.Dtos.Role;
-using HumanResourceManagementSystem.Service.Dtos.UserClaim;
+﻿using HumanResourceManagementSystem.Service.DTOs.Role;
+using HumanResourceManagementSystem.Service.DTOs.UserClaim;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumanResourceManagementSystem.Service.Dtos.User
+namespace HumanResourceManagementSystem.Service.DTOs.User
 {
     public class UpdateUserDto
     {

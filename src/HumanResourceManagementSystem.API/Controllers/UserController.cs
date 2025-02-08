@@ -1,8 +1,8 @@
-﻿using HumanResourceManagementSystem.Service.Dtos.User;
+﻿using HumanResourceManagementSystem.Service.DTOs.User;
 using HumanResourceManagementSystem.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HumanResourceManagementSystem.API.Controllers
+namespace HumanResourceManagementSystem.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
