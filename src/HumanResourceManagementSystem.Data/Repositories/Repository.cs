@@ -56,5 +56,10 @@ namespace HumanResourceManagementSystem.Data.Repositories
             _context.Set<T>().RemoveRange(entities);
             await Task.CompletedTask;
         }
+
+        public IQueryable<T> Query()
+        {
+            return _context.Set<T>().AsQueryable();
+        }
     }
 }

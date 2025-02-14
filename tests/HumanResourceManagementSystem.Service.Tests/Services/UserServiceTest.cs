@@ -176,14 +176,14 @@ namespace ServiceTest
             _mockUnitOfWork.Setup(u => u.Users.GetUserByEmailAsync(email))
                 .ReturnsAsync(user);
 
-            var dto = new VerifyUserDto
+            var dto = new LoginCredentialsDto
             {
                 Email = email,
                 Password = password
             };
 
             // Act
-            var result = await _userService.VerifyUserAsync(dto);
+            var result = await _userService.AuthenticateAsync(dto);
 
             // Assert
             result.Should().NotBeNull();
@@ -193,10 +193,10 @@ namespace ServiceTest
         }
 
         [Test]
-        public async Task VerifyUser_WithInvalidEmail_ShouldThrowUserNotFoundException()
+        public async Task VerifyUser_WithInvalidEmail_ShouldThrowUserUnauthorizedException()
         {
             // Arrange
-            var dto = new VerifyUserDto
+            var dto = new LoginCredentialsDto
             {
                 Email = "nonexistent@example.com",
                 Password = "password"
@@ -206,10 +206,10 @@ namespace ServiceTest
                 .ReturnsAsync((User?)null);
 
             // Act
-            Func<Task> act = () => _userService.VerifyUserAsync(dto);
+            Func<Task> act = () => _userService.AuthenticateAsync(dto);
 
             // Assert
-            await act.Should().ThrowAsync<UserNotFoundException>();
+            await act.Should().ThrowAsync<UserUnauthorizedException>();
         }
 
         [Test]

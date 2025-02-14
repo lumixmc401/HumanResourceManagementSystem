@@ -13,20 +13,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanResourceManagementSyst
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "方案項目", "方案項目", "{8DDC4786-5FC8-F15C-1CA5-9F41FD4BEB75}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Users\user\Downloads\.editorconfig = ..\..\..\..\Users\user\Downloads\.editorconfig
+		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanResourceManagementSystem.Api", "src\HumanResourceManagementSystem.API\HumanResourceManagementSystem.Api.csproj", "{DD8C62BF-74F8-B293-F8E3-40AE20FE9B77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlock", "src\BuildingBlock\BuildingBlock.csproj", "{579B7AAA-DDE2-4530-451E-43FE2DBBCC2F}"
-EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanResourceManagementSystem.Api.Tests", "tests\HumanResourceManagementSystem.Api.Tests\HumanResourceManagementSystem.Api.Tests.csproj", "{D7F8040C-5029-4D60-A1F6-DE9B96BD9554}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanResourceManagementSystem.Service.Tests", "tests\HumanResourceManagementSystem.Service.Tests\HumanResourceManagementSystem.Service.Tests.csproj", "{4AADC33C-8670-4D94-8B84-276A44C307E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{A6BFC8D6-B114-42AE-AF3B-80D105096E1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlock.Core", "src\BuildingBlocks\BuildingBlock.Core\BuildingBlock.Core.csproj", "{9620EC50-38D9-CDD7-B487-8AEDB55DE8A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildingBlock.Security", "src\BuildingBlocks\BuildingBlock.Security\BuildingBlock.Security.csproj", "{93D80E76-822F-4D61-A1EB-407E6A890A8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +50,6 @@ Global
 		{DD8C62BF-74F8-B293-F8E3-40AE20FE9B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD8C62BF-74F8-B293-F8E3-40AE20FE9B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD8C62BF-74F8-B293-F8E3-40AE20FE9B77}.Release|Any CPU.Build.0 = Release|Any CPU
-		{579B7AAA-DDE2-4530-451E-43FE2DBBCC2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{579B7AAA-DDE2-4530-451E-43FE2DBBCC2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{579B7AAA-DDE2-4530-451E-43FE2DBBCC2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{579B7AAA-DDE2-4530-451E-43FE2DBBCC2F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,6 +62,14 @@ Global
 		{4AADC33C-8670-4D94-8B84-276A44C307E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AADC33C-8670-4D94-8B84-276A44C307E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AADC33C-8670-4D94-8B84-276A44C307E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9620EC50-38D9-CDD7-B487-8AEDB55DE8A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9620EC50-38D9-CDD7-B487-8AEDB55DE8A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9620EC50-38D9-CDD7-B487-8AEDB55DE8A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9620EC50-38D9-CDD7-B487-8AEDB55DE8A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93D80E76-822F-4D61-A1EB-407E6A890A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93D80E76-822F-4D61-A1EB-407E6A890A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93D80E76-822F-4D61-A1EB-407E6A890A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93D80E76-822F-4D61-A1EB-407E6A890A8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,9 +78,11 @@ Global
 		{ED92CD56-1C43-9BAF-EDE9-48CD746D216A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{10E0815E-BFAC-1961-7A8D-67FB49C7902C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{DD8C62BF-74F8-B293-F8E3-40AE20FE9B77} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{579B7AAA-DDE2-4530-451E-43FE2DBBCC2F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{D7F8040C-5029-4D60-A1F6-DE9B96BD9554} = {9F894CA3-CE22-4B97-AF8B-C67CED0C58E4}
 		{4AADC33C-8670-4D94-8B84-276A44C307E6} = {9F894CA3-CE22-4B97-AF8B-C67CED0C58E4}
+		{A6BFC8D6-B114-42AE-AF3B-80D105096E1A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{9620EC50-38D9-CDD7-B487-8AEDB55DE8A8} = {A6BFC8D6-B114-42AE-AF3B-80D105096E1A}
+		{93D80E76-822F-4D61-A1EB-407E6A890A8B} = {A6BFC8D6-B114-42AE-AF3B-80D105096E1A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {77C06452-5A8D-4877-A75F-12FF9790CD36}

@@ -1,4 +1,4 @@
-﻿using BuildingBlock.Common.Exceptions;
+﻿using BuildingBlock.Core.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

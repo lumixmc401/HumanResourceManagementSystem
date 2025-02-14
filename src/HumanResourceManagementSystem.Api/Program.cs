@@ -1,17 +1,15 @@
-using BuildingBlock.Common.Exceptions.Handler;
-using BuildingBlock.Middlewares;
-using FluentValidation.AspNetCore;
-using FluentValidation;
-using HumanResourceManagementSystem.Api.Jwt;
-using HumanResourceManagementSystem.Api.Models.DTOs.Jwt;
+using BuildingBlock.Core.Common.Exceptions.Handler;
+using BuildingBlock.Core.Middlewares;
 using HumanResourceManagementSystem.Api.ServiceCollection;
 using HumanResourceManagementSystem.Data.DbContexts;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.Implementations;
 using HumanResourceManagementSystem.Service.Interfaces;
-using HumanResourceManagementSystem.Service.Validators.User;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using HumanResourceManagementSystem.Service.DTOs.Token;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.CookiePolicy;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,19 +20,49 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-// Add services to the container.
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => 
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "HumanResourceManagementSystem API", Version = "v1" });
+
+    // 加入 JWT Authentication 的設定
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 // 註冊 DbContext
 builder.Services.AddDbContext<HumanResourceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddCustomJwtAuthentication(builder.Configuration);
-builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
-builder.Services.AddScoped<JwtTokenGenerator>();
+builder.Services.AddAuthorization();
+
+builder.Services.Configure<RedisSettings>(builder.Configuration.GetSection("Redis"));
+builder.Services.AddSingleton<ITokenCacheService, RedisTokenCacheService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // 註冊 UnitOfWork
 builder.Services.AddScoped<IHumanResourceUnitOfWork, HumanResourceUnitOfWork>();
@@ -44,6 +72,12 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddApplicationValidators();
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.HttpOnly = HttpOnlyPolicy.Always;
+    options.Secure = CookieSecurePolicy.Always;
+    options.MinimumSameSitePolicy = SameSiteMode.Strict;
+});
 
 var app = builder.Build();
 
@@ -55,6 +89,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseExceptionHandler(options => { });
+
+app.UseCookiePolicy();
 
 if (app.Environment.IsDevelopment())
 {
@@ -69,6 +105,7 @@ app.UseHttpsRedirection();
 
 app.UseMiddleware<LoggingMiddleware>();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

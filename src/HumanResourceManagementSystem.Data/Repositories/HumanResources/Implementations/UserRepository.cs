@@ -8,7 +8,10 @@ namespace HumanResourceManagementSystem.Data.Repositories.HumanResources.Impleme
     {
         public Task<User?> GetUserByEmailAsync(string email)
         {
-            return FindFirstAsync(u => u.Email == email);
+            return Query().Where(w => w.Email == email)
+                          .Include(i => i.UserRoles)
+                          .Include(i => i.UserClaims)
+                          .FirstOrDefaultAsync();
         }
     }
 }

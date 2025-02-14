@@ -1,4 +1,4 @@
-﻿using BuildingBlock.Share.Helpers;
+﻿using BuildingBlock.Core.Share.Helpers;
 using HumanResourceManagementSystem.Data.Models.HumanResource;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.DTOs.User;
@@ -82,12 +82,12 @@ namespace HumanResourceManagementSystem.Service.Implementations
             return user ?? throw new UserNotFoundException(userId);
         }
         
-        public async Task<VerifyUserResultDto> VerifyUserAsync(VerifyUserDto dto)
+        public async Task<AuthenticationResultDto> AuthenticateAsync(LoginCredentialsDto dto)
         {
             var user = await _db.Users.GetUserByEmailAsync(dto.Email) 
-                ?? throw new UserNotFoundException("Email",dto.Email);
+                ?? throw new UserUnauthorizedException("Email",dto.Email);
 
-            return new VerifyUserResultDto
+            return new AuthenticationResultDto
             { 
                 IsVerified = PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt)),
                 UserId = user.Id,

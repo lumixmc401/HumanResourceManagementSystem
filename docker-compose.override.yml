@@ -5,6 +5,11 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=HumanResourceDB;User=sa;Password=Your_password123;TrustServerCertificate=True;
+      - Redis__ConnectionString=redis:6379
+      - Redis__InstanceName=hrms
+      - JwtSettings__Issuer=HumanResourceManagementSystem
+      - JwtSettings__Audience=HumanResourceManagementSystem
+      - JwtSettings__SignKey=hfudiakhuihljfioshkdfjledshxfkhdsjkhfkdsfklshdfkjsdh
     ports:
        - "8080:8080"
        - "8081:8081"
@@ -15,6 +20,7 @@ services:
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
     depends_on:
       - sqlserver
+      - redis 
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -25,6 +31,13 @@ services:
       - "1433:1433"
     volumes:
       - sqlserverdata:/var/opt/mssql
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
 
 volumes:
   sqlserverdata:
+  redis-data:  

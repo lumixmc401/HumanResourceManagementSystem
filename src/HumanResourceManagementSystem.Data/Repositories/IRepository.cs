@@ -16,5 +16,6 @@ namespace HumanResourceManagementSystem.Data.Repositories
         Task UpdateAsync(T entity);
         Task RemoveAsync(T entity);
         Task RemoveRangeAsync(IEnumerable<T> entities);
+        IQueryable<T> Query();
     }
 }

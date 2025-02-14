@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BuildingBlock.Common.Exceptions;
+using BuildingBlock.Core.Common.Exceptions;
 
 namespace HumanResourceManagementSystem.Service.Exceptions.User
 {

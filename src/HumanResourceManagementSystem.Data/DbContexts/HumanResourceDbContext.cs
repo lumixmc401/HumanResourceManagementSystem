@@ -1,4 +1,4 @@
-﻿using BuildingBlock.Share.Helpers;
+﻿using BuildingBlock.Core.Share.Helpers;
 using HumanResourceManagementSystem.Data.Models.HumanResource;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -131,14 +131,14 @@ namespace HumanResourceManagementSystem.Data.DbContexts
 
             string salt = "salt";
             byte[] saltBytes = System.Text.Encoding.UTF8.GetBytes(salt);
-            string hashPassword = PasswordHelper.HashPassword("admin", saltBytes);
+            string hashPassword = PasswordHelper.HashPassword("@Admin123456", saltBytes);
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
                     Id = adminUserId,
                     Email = "admin@example.com",
                     PasswordHash = hashPassword,
-                    Salt = salt,
+                    Salt = Convert.ToBase64String(saltBytes),
                 }
             );
 

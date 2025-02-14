@@ -17,7 +17,7 @@ namespace HumanResourceManagementSystem.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -117,8 +117,8 @@ namespace HumanResourceManagementSystem.Data.Migrations
                         {
                             Id = new Guid("a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6"),
                             Email = "admin@example.com",
-                            PasswordHash = "YmMgQNAeIO2STqlO/qZpHQ==",
-                            Salt = "salt"
+                            PasswordHash = "+UDNjfwWfnTQHFRdOZ5z8g==",
+                            Salt = "c2FsdA=="
                         });
                 });
 

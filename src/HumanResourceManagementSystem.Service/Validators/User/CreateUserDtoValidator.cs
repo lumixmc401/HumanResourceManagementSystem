@@ -1,5 +1,5 @@
 using FluentValidation;
-using BuildingBlock.Common.Extensions.FluentValidation;
+using BuildingBlock.Core.Common.Extensions.FluentValidation;
 using HumanResourceManagementSystem.Service.DTOs.User;
 using HumanResourceManagementSystem.Service.Common.Extensions.Validation;
 

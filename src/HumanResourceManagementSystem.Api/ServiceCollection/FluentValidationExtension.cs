@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using HumanResourceManagementSystem.Service.Validators.Token;
 using HumanResourceManagementSystem.Service.Validators.User;
 
 namespace HumanResourceManagementSystem.Api.ServiceCollection
@@ -13,7 +14,9 @@ namespace HumanResourceManagementSystem.Api.ServiceCollection
                 config.DisableDataAnnotationsValidation = true;
             })
             .AddValidatorsFromAssemblyContaining<CreateUserDtoValidator>()
-            .AddValidatorsFromAssemblyContaining<VerifyUserDtoValidator>();
+            .AddValidatorsFromAssemblyContaining<LoginCredentialsDtoValidator>()
+            .AddValidatorsFromAssemblyContaining<RefreshTokenRequestValidator>()
+            .AddValidatorsFromAssemblyContaining<RevokeRefreshTokenRequestValidator>();
             return services;
         }
     }

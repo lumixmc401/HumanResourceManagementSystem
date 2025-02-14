@@ -1,4 +1,4 @@
-﻿using BuildingBlock.Common.Extensions.FluentValidation;
+﻿using BuildingBlock.Core.Common.Extensions.FluentValidation;
 using FluentValidation;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BuildingBlock\BuildingBlock.csproj" />
+    <PackageReference Include="StackExchange.Redis" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BuildingBlocks\BuildingBlock.Security\BuildingBlock.Security.csproj" />
     <ProjectReference Include="..\HumanResourceManagementSystem.Data\HumanResourceManagementSystem.Data.csproj" />
   </ItemGroup>
 
