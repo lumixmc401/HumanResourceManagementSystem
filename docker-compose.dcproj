@@ -15,7 +15,5 @@
     </None>
     <None Include="docker-compose.yml" />
     <None Include=".dockerignore" />
-    <None Include="src\HumanResourceManagementSystem.Api\Middlewares\AccessTokenBlacklistMiddleware.cs" />
-    <None Include="tests\HumanResourceManagementSystem.Api.Tests\Tests\Middlewares\TokenBlacklistValidationMiddlewareTest.cs" />
   </ItemGroup>
 </Project>
