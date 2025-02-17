@@ -11,7 +11,7 @@ namespace BuildingBlock.Core.Common.Exceptions
         public UnauthorizedException(string message) : base(message)
         {
         }
-        public UnauthorizedException(string name, object key) : base($"實體 \"{name}\" {key}沒有找到")
+        public UnauthorizedException(string name, object key) : base($"實體 \"{name}\" {key}認證失敗")
         {
         }
     }

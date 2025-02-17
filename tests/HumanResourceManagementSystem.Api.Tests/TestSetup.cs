@@ -55,44 +55,16 @@ namespace HumanResourceManagementSystem.Api.Tests
             await RedisContainer.DisposeAsync();
             await Factory.DisposeAsync();
         }
-        public static HttpClient GetClientWithoutToken()
+
+        public static HttpClient GetClient()
         {
             return Factory.CreateClient();
-        }
-
-        public static async Task<HttpClient> GetClientWithTokenAsync(string email, string password)
-        {
-            var getTokenClient = GetClientWithoutToken();
-            var getTokenRequest = new LoginCredentialsDto
-            {
-                Email = email,
-                Password = password
-            };
-            var response = await getTokenClient.PostAsJsonAsync(TokenEndpoints.Login, getTokenRequest);
-            if (response.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                throw new Exception("Token generation failed");
-            }
-            var token = await response.Content.ReadAsStringAsync();
-            var clientWithToken = TestSetup.Factory.CreateClient();
-            clientWithToken.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Bearer {token}");
-            return clientWithToken;
         }
 
         public static T GetService<T>() where T : class
         {
             using var scope = _serviceProvider.CreateScope();
             return scope.ServiceProvider.GetRequiredService<T>();
-        }
-        public static async Task<TResult> ExecuteInScopeAsync<TResult>(Func<IServiceProvider, Task<TResult>> action)
-        {
-            if (_serviceProvider == null)
-            {
-                throw new InvalidOperationException("Service provider is not initialized");
-            }
-
-            using var scope = _serviceProvider.CreateScope();
-            return await action(scope.ServiceProvider);
         }
     }
 }

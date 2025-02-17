@@ -35,40 +35,6 @@ namespace HumanResourceManagementSystem.Api.ServiceCollection
                                 Encoding.UTF8.GetBytes(jwtSettings.SignKey ?? throw new ArgumentNullException("Jwt SignKey Not Set"))),
                         ClockSkew = TimeSpan.Zero
                     };
-
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnTokenValidated = async context =>
-                        {
-                            var tokenService = context.HttpContext.RequestServices
-                                .GetRequiredService<ITokenService>();
-
-                            var token = context.SecurityToken as JwtSecurityToken;
-                            if (token != null)
-                            {
-                                var isBlacklisted = await tokenService
-                                    .IsAccessTokenBlacklistedAsync(token.RawData);
-
-                                if (isBlacklisted)
-                                {
-                                    context.Fail(new SecurityTokenException("Token has been blacklisted"));
-                                }
-                            }
-                        },
-                        OnAuthenticationFailed = context =>
-                        {
-                            context.NoResult();
-                            context.Response.StatusCode = 401;
-                            context.Response.ContentType = "application/json";
-
-                            var result = JsonSerializer.Serialize(new
-                            {
-                                message = context.Exception.Message
-                            });
-
-                            return context.Response.WriteAsync(result);
-                        }
-                    };
                 });
             return services;
         }

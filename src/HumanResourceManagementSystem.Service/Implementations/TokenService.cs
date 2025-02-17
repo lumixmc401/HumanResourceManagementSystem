@@ -82,13 +82,15 @@ namespace HumanResourceManagementSystem.Service.Implementations
                     UserId = cacheData.UserId,
                     UserName = cacheData.UserName,
                     RoleIds = cacheData.RoleIds,
-                    IsVerified = true
                 },
                 deviceInfo);
         }
 
         public async Task RevokeRefreshTokenAsync(RevokeRefreshTokenRequest request)
         {
+            var exists = await _tokenCache.GetRefreshTokenAsync(request.RefreshToken)
+                ?? throw new InvalidRefreshTokenException("Invalid Refresh Token");
+
             await _tokenCache.RemoveRefreshTokenAsync(request.RefreshToken);
         }
 

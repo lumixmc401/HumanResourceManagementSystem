@@ -87,12 +87,27 @@ namespace HumanResourceManagementSystem.Service.Implementations
             var user = await _db.Users.GetUserByEmailAsync(dto.Email) 
                 ?? throw new UserUnauthorizedException("Email",dto.Email);
 
+            if (!PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt)))
+            {
+                throw new UserUnauthorizedException("Email", dto.Email);
+            }
+
             return new AuthenticationResultDto
-            { 
-                IsVerified = PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt)),
+            {
                 UserId = user.Id,
                 UserName = user.UserClaims.FirstOrDefault(c => c.ClaimType == ClaimTypes.Name)?.ClaimValue ?? "",
                 RoleIds = [.. user.UserRoles.Select(r => r.RoleId)]
+            };
+        }
+
+        public async Task<UserProfileDto> GetUserProfileAsync(Guid id)
+        {
+            var user = await _db.Users.GetByIdAsync(id);
+            return new UserProfileDto
+            {
+                Id = user.Id,
+                UserName = user.UserClaims
+                .FirstOrDefault(c => c.ClaimType == ClaimTypes.Name)?.ClaimValue ?? "",
             };
         }
     }

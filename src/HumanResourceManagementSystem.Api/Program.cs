@@ -1,5 +1,4 @@
 using BuildingBlock.Core.Common.Exceptions.Handler;
-using BuildingBlock.Core.Middlewares;
 using HumanResourceManagementSystem.Api.ServiceCollection;
 using HumanResourceManagementSystem.Data.DbContexts;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
@@ -10,6 +9,7 @@ using Serilog;
 using HumanResourceManagementSystem.Service.DTOs.Token;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.CookiePolicy;
+using HumanResourceManagementSystem.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -106,6 +106,7 @@ app.UseHttpsRedirection();
 app.UseMiddleware<LoggingMiddleware>();
 
 app.UseAuthentication();
+app.UseTokenBlacklistValidation();
 app.UseAuthorization();
 
 app.MapControllers();

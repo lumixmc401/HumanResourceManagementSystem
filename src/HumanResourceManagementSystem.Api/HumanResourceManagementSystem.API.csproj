@@ -28,6 +28,7 @@
   
   <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\BuildingBlock.Core\BuildingBlock.Core.csproj" />
+    <ProjectReference Include="..\BuildingBlocks\BuildingBlock.Security\BuildingBlock.Security.csproj" />
     <ProjectReference Include="..\HumanResourceManagementSystem.Data\HumanResourceManagementSystem.Data.csproj" />
     <ProjectReference Include="..\HumanResourceManagementSystem.Service\HumanResourceManagementSystem.Service.csproj" />
   </ItemGroup>

@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace HumanResourceManagementSystem.Service.DTOs.User
 {
-    public class AuthenticationResultDto
+    public class UserProfileDto
     {
-        public Guid UserId { get; set; }
-        public string UserName { get; set; } = "";
-        public IEnumerable<Guid> RoleIds = [];
+        public Guid Id { get; set; }
+        public string UserName { get; set; }
     }
 }

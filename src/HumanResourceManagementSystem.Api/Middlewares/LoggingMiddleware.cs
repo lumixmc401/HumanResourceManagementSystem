@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 
-namespace BuildingBlock.Core.Middlewares
+namespace HumanResourceManagementSystem.Api.Middlewares
 {
     public class LoggingMiddleware(RequestDelegate next, ILogger<LoggingMiddleware> logger)
     {

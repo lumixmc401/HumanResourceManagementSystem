@@ -1,10 +1,13 @@
-﻿using BuildingBlock.Security.Jwt;
+﻿using System.Security;
+using BuildingBlock.Core.Common.Exceptions;
+using BuildingBlock.Security.Jwt;
 using HumanResourceManagementSystem.Api.Models.Response;
 using HumanResourceManagementSystem.Service.DTOs.Token;
 using HumanResourceManagementSystem.Service.DTOs.User;
 using HumanResourceManagementSystem.Service.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HumanResourceManagementSystem.Api.Controllers
@@ -31,9 +34,6 @@ namespace HumanResourceManagementSystem.Api.Controllers
         public async Task<IActionResult> Login(LoginCredentialsDto dto)
         {
             var authResult = await _userService.AuthenticateAsync(dto);
-            if (!authResult.IsVerified)
-                return Unauthorized();
-
             var deviceInfo = GetDeviceInfo();
             var tokenResponse = await _tokenService.GenerateTokensAsync(authResult, deviceInfo);
 
@@ -58,15 +58,7 @@ namespace HumanResourceManagementSystem.Api.Controllers
         [HttpPost("refresh")]
         public async Task<IActionResult> Refresh()
         {
-            var refreshToken = Request.Cookies["RefreshToken"];
-            var accessToken = HttpContext.Request.Headers["Authorization"]
-                .FirstOrDefault()?.Split(" ").Last();
-            if (string.IsNullOrEmpty(refreshToken))
-            {
-                await _tokenService.BlacklistAccessTokenAsync(accessToken!);
-                return Unauthorized("No refresh token provided");
-            }
-                
+            var refreshToken = GetRefreshToken();
             var deviceInfo = GetDeviceInfo();
             var request = new RefreshTokenRequest { RefreshToken = refreshToken };
             var tokenResponse = await _tokenService.RefreshTokenAsync(request, deviceInfo);
@@ -93,24 +85,25 @@ namespace HumanResourceManagementSystem.Api.Controllers
         [HttpPost("revoke")]
         public async Task<IActionResult> Revoke()
         {
-            var refreshToken = Request.Cookies["RefreshToken"];
-            var accessToken = HttpContext.Request.Headers["Authorization"]
-                .FirstOrDefault()?.Split(" ").Last();
-            if (string.IsNullOrEmpty(refreshToken))
-            {
-                await _tokenService.BlacklistAccessTokenAsync(accessToken!);
-                return Unauthorized("No refresh token provided");
-            }
-
+            string refreshToken = GetRefreshToken();
+            string accessToken = GetAccessToken();
             var request = new RevokeRefreshTokenRequest { RefreshToken = refreshToken };
             await _tokenService.RevokeRefreshTokenAsync(request);
-
-            // 刪除 Refresh Token Cookie
+            await _tokenService.BlacklistAccessTokenAsync(accessToken);
             Response.Cookies.Delete("RefreshToken");
-
             return Ok();
         }
-
+        private string GetRefreshToken()
+        {
+            return Request.Cookies["RefreshToken"]
+                ?? throw new UnauthorizedException("No Refresh Token Provide");
+        }
+        private string GetAccessToken()
+        {
+            return HttpContext.Request.Headers["Authorization"]
+                .FirstOrDefault()?.Split(" ").Last()
+                ?? throw new UnauthorizedException("No Access Token Provide");
+        }
         private string GetDeviceInfo()
         {
             var userAgent = Request.Headers.UserAgent.ToString();

@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Jwt\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>

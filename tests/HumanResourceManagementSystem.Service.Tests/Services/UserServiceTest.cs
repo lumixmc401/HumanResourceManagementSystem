@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using BuildingBlock.Core.Share.Helpers;
+using FluentAssertions;
 using HumanResourceManagementSystem.Data.Models.HumanResource;
 using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.DTOs.Role;
@@ -151,18 +152,19 @@ namespace ServiceTest
         public async Task VerifyUser_WithValidCredentials_ShouldReturnVerifiedResponse()
         {
             // Arrange
-            var email = "test@example.com";
-            var password = "password";
-            var userId = Guid.NewGuid();
-            var userName = "Test User";
-            var roleId = Guid.NewGuid();
+            string email = "test@example.com";
+            string password = "password";
+            byte[] salt = [1,2,3];
+            Guid userId = Guid.NewGuid();
+            string userName = "Test User";
+            Guid roleId = Guid.NewGuid();
 
             var user = new User
             {
                 Id = userId,
                 Email = email,
-                PasswordHash = "hashedPassword",
-                Salt = "salt",
+                PasswordHash = PasswordHelper.HashPassword(password, salt),
+                Salt = Convert.ToBase64String(salt),
                 UserClaims = new List<UserClaim>
                 {
                     new() { ClaimType = ClaimTypes.Name, ClaimValue = userName }

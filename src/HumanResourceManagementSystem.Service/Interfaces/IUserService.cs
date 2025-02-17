@@ -16,5 +16,6 @@ namespace HumanResourceManagementSystem.Service.Interfaces
         Task UpdatePasswordAsync(UpdateUserPasswordDto user);
         Task<AuthenticationResultDto> AuthenticateAsync(LoginCredentialsDto dto);
         Task DeleteUserAsync(Guid userId);
+        Task<UserProfileDto> GetUserProfileAsync(Guid id);
     }
 }
