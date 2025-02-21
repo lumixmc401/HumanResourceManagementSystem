@@ -10,7 +10,7 @@ using HumanResourceManagementSystem.Api.Models.Response;
 using HumanResourceManagementSystem.Api.Tests.Constants.Api;
 using HumanResourceManagementSystem.Service.DTOs.User;
 
-namespace HumanResourceManagementSystem.Api.Tests.Factory
+namespace HumanResourceManagementSystem.Api.Tests.Factories
 {
     public static class TestClientFactory
     {

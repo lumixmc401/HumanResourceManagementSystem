@@ -4,6 +4,7 @@ using HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource;
 using HumanResourceManagementSystem.Service.DTOs.User;
 using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace HumanResourceManagementSystem.Service.Implementations
@@ -87,7 +88,8 @@ namespace HumanResourceManagementSystem.Service.Implementations
             var user = await _db.Users.GetUserByEmailAsync(dto.Email) 
                 ?? throw new UserUnauthorizedException("Email",dto.Email);
 
-            if (!PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt)))
+            bool isPasswordValid = PasswordHelper.VerifyPassword(dto.Password, user.PasswordHash, Convert.FromBase64String(user.Salt));
+            if (!isPasswordValid)
             {
                 throw new UserUnauthorizedException("Email", dto.Email);
             }
@@ -102,13 +104,14 @@ namespace HumanResourceManagementSystem.Service.Implementations
 
         public async Task<UserProfileDto> GetUserProfileAsync(Guid id)
         {
-            var user = await _db.Users.GetByIdAsync(id);
-            return new UserProfileDto
+            return await _db.Users.Query().Where(w => w.Id == id).Select(s => new UserProfileDto
             {
-                Id = user.Id,
-                UserName = user.UserClaims
-                .FirstOrDefault(c => c.ClaimType == ClaimTypes.Name)?.ClaimValue ?? "",
-            };
+                Id = s.Id,
+                UserName = s.UserClaims
+                    .Where(c => c.ClaimType == ClaimTypes.Name)
+                    .Select(c => c.ClaimValue)
+                    .FirstOrDefault() ?? "未設定使用者名稱"
+            }).FirstOrDefaultAsync() ?? throw new UserNotFoundException(id);
         }
     }
 }

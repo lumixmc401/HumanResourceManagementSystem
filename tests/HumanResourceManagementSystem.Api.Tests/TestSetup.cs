@@ -1,7 +1,7 @@
 ﻿using DotNet.Testcontainers.Builders;
 using HumanResourceManagementSystem.Api.Tests.Constants.Api;
 using HumanResourceManagementSystem.Api.Tests.Data;
-using HumanResourceManagementSystem.Api.Tests.Factory;
+using HumanResourceManagementSystem.Api.Tests.Factories;
 using HumanResourceManagementSystem.Data.DbContexts;
 using HumanResourceManagementSystem.Service.DTOs.User;
 using Microsoft.AspNetCore.Mvc.Testing;

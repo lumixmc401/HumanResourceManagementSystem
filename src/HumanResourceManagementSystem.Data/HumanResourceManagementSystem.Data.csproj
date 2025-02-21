@@ -19,11 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\HumanResources\Interfaces\" />
-    <Folder Include="Repositories\HumanResources\Implementations\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BuildingBlocks\BuildingBlock.Core\BuildingBlock.Core.csproj" />
   </ItemGroup>
 

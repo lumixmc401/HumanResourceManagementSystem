@@ -8,9 +8,10 @@ using HumanResourceManagementSystem.Service.DTOs.UserClaim;
 using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Implementations;
 using Moq;
+using MockQueryable.Moq;
 using System.Security.Claims;
 
-namespace ServiceTest
+namespace HumanResourceManagementSystem.Service.Tests.Services
 {
     public class UserServiceTests
     {
@@ -98,7 +99,7 @@ namespace ServiceTest
         {
             // Arrange
             var userId = Guid.NewGuid();
-            var newPassword = "newPassword";
+            string newPassword = "newPassword";
             var user = new User { Id = userId, Email = "test@example.com" };
 
             _mockUnitOfWork.Setup(u => u.Users.GetByIdAsync(userId)).ReturnsAsync(user);
@@ -106,7 +107,7 @@ namespace ServiceTest
             _mockUnitOfWork.Setup(u => u.CompleteAsync()).Returns(Task.FromResult(1));
 
             // Act
-            await _userService.UpdatePasswordAsync(new UpdateUserPasswordDto 
+            await _userService.UpdatePasswordAsync(new UpdateUserPasswordDto
             {
                 Id = userId,
                 NewPassword = newPassword,
@@ -127,7 +128,7 @@ namespace ServiceTest
             _mockUnitOfWork.Setup(u => u.Users.GetByIdAsync(userId)).ReturnsAsync(user);
 
             // Act
-            var result = await _userService.GetUserByIdAsync(userId);
+            User result = await _userService.GetUserByIdAsync(userId);
 
             // Assert
             result.Should().Be(user);
@@ -147,14 +148,14 @@ namespace ServiceTest
             // Assert
             act.Should().ThrowAsync<UserNotFoundException>();
         }
-        
+
         [Test]
         public async Task VerifyUser_WithValidCredentials_ShouldReturnVerifiedResponse()
         {
             // Arrange
             string email = "test@example.com";
             string password = "password";
-            byte[] salt = [1,2,3];
+            byte[] salt = [1, 2, 3];
             Guid userId = Guid.NewGuid();
             string userName = "Test User";
             Guid roleId = Guid.NewGuid();
@@ -165,14 +166,14 @@ namespace ServiceTest
                 Email = email,
                 PasswordHash = PasswordHelper.HashPassword(password, salt),
                 Salt = Convert.ToBase64String(salt),
-                UserClaims = new List<UserClaim>
-                {
+                UserClaims =
+                [
                     new() { ClaimType = ClaimTypes.Name, ClaimValue = userName }
-                },
-                UserRoles = new List<UserRole>
-                {
+                ],
+                UserRoles =
+                [
                     new() { RoleId = roleId }
-                }
+                ]
             };
 
             _mockUnitOfWork.Setup(u => u.Users.GetUserByEmailAsync(email))
@@ -271,5 +272,82 @@ namespace ServiceTest
             // Assert
             await act.Should().ThrowAsync<UserNotFoundException>();
         }
+
+        [Test]
+        public async Task GetUserProfileAsync_WithValidId_ShouldReturnUserProfile()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            string userName = "Test User";
+            var users = new List<User>
+            {
+                new()
+                {
+                    Id = userId,
+                    UserClaims =
+                    [
+                        new() { ClaimType = ClaimTypes.Name, ClaimValue = userName }
+                    ]
+                }
+            };
+
+            var mock = users.AsQueryable().BuildMockDbSet();
+            _mockUnitOfWork.Setup(u => u.Users.Query())
+                .Returns(mock.Object);
+
+            // Act
+            var result = await _userService.GetUserProfileAsync(userId);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(userId);
+            result.UserName.Should().Be(userName);
+        }
+
+        [Test]
+        public async Task GetUserProfileAsync_WithoutNameClaim_ShouldReturnDefaultUserName()
+        {
+            // Arrange
+            var userId = Guid.NewGuid();
+            var users = new List<User>
+            {
+                new()
+                {
+                    Id = userId,
+                    UserClaims = []
+                }
+            };
+
+            var mock = users.AsQueryable().BuildMockDbSet();
+            _mockUnitOfWork.Setup(u => u.Users.Query())
+                .Returns(mock.Object);
+
+            // Act
+            var result = await _userService.GetUserProfileAsync(userId);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Id.Should().Be(userId);
+            result.UserName.Should().Be("未設定使用者名稱");
+        }
+
+        [Test]
+        public async Task GetUserProfileAsync_WithInvalidId_ShouldThrowUserNotFoundException()
+        {
+            // Arrange
+            var invalidUserId = Guid.NewGuid();
+            var users = new List<User>();
+
+            var mock = users.AsQueryable().BuildMockDbSet();
+            _mockUnitOfWork.Setup(u => u.Users.Query())
+                .Returns(mock.Object);
+
+            // Act
+            Func<Task> act = () => _userService.GetUserProfileAsync(invalidUserId);
+
+            // Assert
+            await act.Should().ThrowAsync<UserNotFoundException>();
+        }
+
     }
 }

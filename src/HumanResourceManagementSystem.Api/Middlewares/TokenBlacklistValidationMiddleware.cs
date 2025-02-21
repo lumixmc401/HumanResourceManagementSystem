@@ -1,6 +1,5 @@
+using HumanResourceManagementSystem.Service.Exceptions.User;
 using HumanResourceManagementSystem.Service.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
 
 namespace HumanResourceManagementSystem.Api.Middlewares
 {
@@ -30,9 +29,7 @@ namespace HumanResourceManagementSystem.Api.Middlewares
                 if (isBlacklisted)
                 {
                     _logger.LogWarning("Token validation failed: Token is blacklisted");
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsJsonAsync(new { message = "Token has been blacklisted" });
-                    return;
+                    throw new UserUnauthorizedException("Token has been blacklisted");
                 }
             }
 

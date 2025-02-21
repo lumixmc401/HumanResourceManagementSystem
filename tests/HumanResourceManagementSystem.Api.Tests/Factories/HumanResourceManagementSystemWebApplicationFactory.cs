@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.MsSql;
 using Testcontainers.Redis;
 
-namespace HumanResourceManagementSystem.Api.Tests.Factory
+namespace HumanResourceManagementSystem.Api.Tests.Factories
 {
     public class HumanResourceManagementSystemWebApplicationFactory<TProgram> : WebApplicationFactory<TProgram>
          where TProgram : class

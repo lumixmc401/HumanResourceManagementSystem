@@ -11,9 +11,11 @@ public class RedisTokenCacheService : ITokenCacheService
     private readonly string _instanceName;
     private const string KeyPrefix = "refresh_token:";
 
-    public RedisTokenCacheService(IOptions<RedisSettings> redisSettings)
+    public RedisTokenCacheService(
+        IConnectionMultiplexer redis,
+        IOptions<RedisSettings> redisSettings)
     {
-        _redis = ConnectionMultiplexer.Connect(redisSettings.Value.ConnectionString);
+        _redis = redis;
         _instanceName = redisSettings.Value.InstanceName;
     }
 
@@ -48,6 +50,7 @@ public class RedisTokenCacheService : ITokenCacheService
         string key = GetKey(token);
         return await Database.KeyExistsAsync(key);
     }
+
     public async Task<bool> SetAsync(string key, string value, TimeSpan expiry)
     {
         var db = _redis.GetDatabase();

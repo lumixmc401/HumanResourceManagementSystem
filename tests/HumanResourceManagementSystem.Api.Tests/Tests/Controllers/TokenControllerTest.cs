@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 using HumanResourceManagementSystem.Api.Models.Response;
 using HumanResourceManagementSystem.Service.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using HumanResourceManagementSystem.Api.Tests.Factory;
+using HumanResourceManagementSystem.Api.Tests.Factories;
 
 namespace HumanResourceManagementSystem.Api.Tests.Tests.Controllers
 {

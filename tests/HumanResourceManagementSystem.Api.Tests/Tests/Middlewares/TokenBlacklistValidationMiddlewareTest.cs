@@ -5,7 +5,7 @@ using FluentAssertions;
 using HumanResourceManagementSystem.Api.Models.Response;
 using HumanResourceManagementSystem.Api.Tests.Constants.Api;
 using HumanResourceManagementSystem.Api.Tests.Constants.Data;
-using HumanResourceManagementSystem.Api.Tests.Factory;
+using HumanResourceManagementSystem.Api.Tests.Factories;
 using HumanResourceManagementSystem.Service.DTOs.User;
 using HumanResourceManagementSystem.Service.Interfaces;
 
@@ -13,7 +13,7 @@ namespace HumanResourceManagementSystem.Api.Tests.Tests.Controllers
 {
     public class TokenBlacklistValidationMiddlewareTest
     {
-        private const string TEST_ENDPOINT = UserEndPoints.Profile;
+        private const string TestEndPoint = UserEndPoints.Profile;
 
         [Test]
         public async Task Middleware_WithBlacklistedToken_BlocksRequest()
@@ -31,7 +31,7 @@ namespace HumanResourceManagementSystem.Api.Tests.Tests.Controllers
             await tokenService.BlacklistAccessTokenAsync(token!);
 
             // Act
-            var response = await client.GetAsync(TEST_ENDPOINT);
+            var response = await client.GetAsync(TestEndPoint);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
@@ -48,7 +48,7 @@ namespace HumanResourceManagementSystem.Api.Tests.Tests.Controllers
                 UserConstants.Credentials.AdminPassword);
 
             // Act
-            var response = await client.GetAsync(TEST_ENDPOINT);
+            var response = await client.GetAsync(TestEndPoint);
 
             // Assert
             response.StatusCode.Should().NotBe(HttpStatusCode.Unauthorized);
@@ -61,7 +61,7 @@ namespace HumanResourceManagementSystem.Api.Tests.Tests.Controllers
             using var client = TestClientFactory.CreateClient();
 
             // Act
-            var response = await client.GetAsync(TEST_ENDPOINT);
+            var response = await client.GetAsync(TestEndPoint);
 
             // Assert
             var content = await response.Content.ReadAsStringAsync();

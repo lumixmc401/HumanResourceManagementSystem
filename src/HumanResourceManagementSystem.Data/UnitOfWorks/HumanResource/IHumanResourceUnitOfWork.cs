@@ -4,6 +4,9 @@ namespace HumanResourceManagementSystem.Data.UnitOfWorks.HumanResource
 {
     public interface IHumanResourceUnitOfWork : IUnitOfWork
     {
+        IBillingRequestRepository BillingRequests { get;}
+        IVoucherNumberRepository VoucherNumbers { get; }
+        IVoucherNumberSequenceRepository VoucherNumberSequences { get; }
         IUserRepository Users { get; }
         IRoleRepository Roles { get; }
         IPermissionRepository Permissions { get; }

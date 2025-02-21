@@ -48,13 +48,16 @@ namespace HumanResourceManagementSystem.Service.Implementations
             string refreshToken = GenerateRefreshToken();
             var expiry = TimeSpan.FromDays(RefreshTokenExpiryDays);
 
-            var cacheData = new TokenCacheDto(
-                authResult.UserId,
-                authResult.UserName,
-                authResult.RoleIds,
-                refreshToken,
-                DateTime.UtcNow,
-                deviceInfo);
+            var cacheData = new TokenCacheDto
+            {
+                UserId = authResult.UserId,
+                UserName = authResult.UserName,
+                RoleIds = authResult.RoleIds,
+                Token = refreshToken,
+                CreatedAt = DateTime.UtcNow,
+                DeviceInfo = deviceInfo
+            };
+
 
             await _tokenCache.SetRefreshTokenAsync(refreshToken, cacheData, expiry);
 
@@ -71,7 +74,7 @@ namespace HumanResourceManagementSystem.Service.Implementations
             RefreshTokenRequest request,
             string deviceInfo)
         {
-            var cacheData = await _tokenCache.GetRefreshTokenAsync(request.RefreshToken) 
+            var cacheData = await _tokenCache.GetRefreshTokenAsync(request.RefreshToken)
                 ?? throw new InvalidRefreshTokenException("Invalid Refresh Token");
 
             await _tokenCache.RemoveRefreshTokenAsync(request.RefreshToken);

@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace HumanResourceManagementSystem.Api.ServiceCollection
 {
-    public static class JwtAuthenticationExtension
+    public static class JwtAuthenticationExtensions
     {
         public static IServiceCollection AddCustomJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {

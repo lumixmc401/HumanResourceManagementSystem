@@ -9,10 +9,10 @@ namespace HumanResourceManagementSystem.Api.Tests.Data.SeedData
 {
     public static class UserData
     {
-        private readonly static string adminSalt = "test_salt_1";
-        private readonly static byte[] adminSaltbytes = Encoding.UTF8.GetBytes(adminSalt);
-        private readonly static string regularUserSalt = "test_salt_2";
-        private readonly static byte[] regularUserSaltbytes = Encoding.UTF8.GetBytes(regularUserSalt);
+        private static readonly string adminSalt = "test_salt_1";
+        private static readonly byte[] adminSaltbytes = Encoding.UTF8.GetBytes(adminSalt);
+        private static readonly string regularUserSalt = "test_salt_2";
+        private static readonly byte[] regularUserSaltbytes = Encoding.UTF8.GetBytes(regularUserSalt);
         public static IReadOnlyList<User> Users =>
         [
             new()

@@ -52,6 +52,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 });
+builder.Services.AddRedisCache(builder.Configuration);
 
 // µù¥U DbContext
 builder.Services.AddDbContext<HumanResourceDbContext>(options =>

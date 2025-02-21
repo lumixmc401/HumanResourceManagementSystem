@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace HumanResourceManagementSystem.Service.DTOs.Token
 {
-    public record TokenCacheDto(
-    Guid UserId,
-    string UserName,
-    IEnumerable<Guid> RoleIds,
-    string Token,
-    DateTime CreatedAt,
-    string DeviceInfo);
+    public class TokenCacheDto
+    {
+        public Guid UserId { get; set; }
+        public string UserName { get; set; }
+        public IEnumerable<Guid> RoleIds { get; set; }
+        public string Token { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public string DeviceInfo { get; set; }
+    }
 }

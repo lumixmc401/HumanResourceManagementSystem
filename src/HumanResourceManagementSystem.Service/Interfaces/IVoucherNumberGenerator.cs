@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace HumanResourceManagementSystem.Service.Interfaces
 {
-    internal interface IAuthService
+    public interface IVoucherNumberGenerator
     {
+        Task<string> GenerateVoucherNumberAsync(DateTime date);
     }
 }

@@ -5,7 +5,7 @@ using HumanResourceManagementSystem.Service.Validators.User;
 
 namespace HumanResourceManagementSystem.Api.ServiceCollection
 {
-    public static class FluentValidationExtension
+    public static class FluentValidationExtensions
     {
         public static IServiceCollection AddApplicationValidators(this IServiceCollection services)
         {

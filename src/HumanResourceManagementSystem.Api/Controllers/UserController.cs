@@ -23,7 +23,7 @@ namespace HumanResourceManagementSystem.Api.Controllers
         [HttpGet("profile")]
         public async Task<IActionResult> GetUserProfile()
         {
-            Guid id = Guid.Parse(User.FindFirstValue(JwtRegisteredClaimNames.Sub));
+            Guid id = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return Ok(await _userService.GetUserProfileAsync(id));
         }
 
